@@ -1,13 +1,19 @@
-package com.example.cas.service.serviceImp;
+/*
+ * Copyright (c) 2018.
+ * 项目名称：auth-gateway-backend
+ * 文件名称：UserServiceImp.java
+ * Date：18-3-6 下午3:51
+ * Author：boni
+ */
 
-import com.example.cas.domain.User;
-import com.example.cas.mapper.UserMapper;
-import com.example.cas.service.UserService;
+package com.blueskykong.auth.service.serviceImp;
+
+
+import com.blueskykong.auth.domain.User;
+import com.blueskykong.auth.mapper.UserMapper;
+import com.blueskykong.auth.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Map;
 
 @Service
 public class UserServiceImp implements UserService {

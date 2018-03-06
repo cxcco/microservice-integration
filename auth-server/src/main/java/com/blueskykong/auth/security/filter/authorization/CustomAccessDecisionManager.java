@@ -18,8 +18,11 @@ import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.web.FilterInvocation;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -28,20 +31,21 @@ import java.util.Iterator;
  */
 @Slf4j
 @Component
-public class SecurityAccessDecisionManager implements AccessDecisionManager {
+public class CustomAccessDecisionManager implements AccessDecisionManager {
     /**
      * @param authentication 用户权限
-     * @param o              url
-     * @param collection     所需要的权限
+     * @param object         用户请求
+     * @param configAttributes    所需要的权限
      * @throws AccessDeniedException
      * @throws InsufficientAuthenticationException
      */
     @Override
-    public void decide(Authentication authentication, Object o, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {
+    public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {
         log.info("decide url and permission");
         if (configAttributes == null) {
             return;
         }
+        HttpServletRequest request = ((FilterInvocation) object).getHttpRequest();
         String url,method;
             for (GrantedAuthority ga : authentication.getAuthorities()) {
                 if (ga instanceof CustomGrantedAuthority) {
@@ -50,27 +54,13 @@ public class SecurityAccessDecisionManager implements AccessDecisionManager {
                     method = grantedAuthority.getMethod();
                     if (matchers(url, request)) {
                         if (method.equals(request.getMethod()) || "ALL".equals(method)) {
-                            //将必要的用户信息放入request中，在controller层需要使用的地方通过getAttribute方法获取对应的数据即可
-                            request.setAttribute("uid", ((User) authentication.getPrincipal()).getId());
                             return;
                         }
                     }
                 }
             }
-        Iterator<ConfigAttribute> iterator = collection.iterator();
-        //判断用户所拥有的权限，是否符合对应的Url权限，如果实现了UserDetailsService，则用户权限是loadUserByUsername返回用户所对应的权限
-        while (iterator.hasNext()) {
-            ConfigAttribute ca = iterator.next();
-            String needRole = ca.getAttribute();
-            for (GrantedAuthority ga : authentication.getAuthorities()) {
-                log.info("GrantedAuthority: {}", ga);
-                if (needRole.equals(ga.getAuthority())) {
-                    return;
-                }
-            }
-        }
         log.error("AccessDecisionManager: no right!");
-        throw new AccessDeniedException("no right!");
+        throw new AccessDeniedException("AccessDecisionManager: no right!");
     }
 
     @Override
@@ -82,6 +72,11 @@ public class SecurityAccessDecisionManager implements AccessDecisionManager {
     @Override
     public boolean supports(Class<?> aClass) {
         return true;
+    }
+
+    private boolean matchers(String url, HttpServletRequest request) {
+        AntPathRequestMatcher matcher = new AntPathRequestMatcher(url);
+        return matcher.matches(request);
     }
 }
 

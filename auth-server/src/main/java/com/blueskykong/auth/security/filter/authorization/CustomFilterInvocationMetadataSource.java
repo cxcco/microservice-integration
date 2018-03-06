@@ -25,7 +25,7 @@ import java.util.Set;
  */
 @Slf4j
 @Component
-public class SecureResourceFilterInvocationDefinitionSource implements FilterInvocationSecurityMetadataSource {
+public class CustomFilterInvocationMetadataSource implements FilterInvocationSecurityMetadataSource {
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
         log.info("getAttributes");
