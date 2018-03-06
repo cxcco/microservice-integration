@@ -11,9 +11,7 @@
 
     <artifactId>backend-server</artifactId>
 
-
     <dependencies>
-
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter</artifactId>
@@ -34,6 +32,6 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
         </dependency>
-
     </dependencies>
+
 </project>

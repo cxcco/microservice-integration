@@ -1,12 +1,14 @@
 package com.blueskykong.auth.security;
 
 import com.auth0.jwt.internal.org.apache.commons.lang3.StringUtils;
-import com.blueskykong.auth.client.feign.UserClient;
+import com.blueskykong.auth.security.service.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
@@ -22,13 +24,13 @@ import java.util.UUID;
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
-    private UserClient userClient;
+    private AuthenticationUserDetailsService<AbstractAuthenticationToken> authenticationUserDetailsService;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
         String password;
-        Map data = (Map) authentication.getDetails();
+        Map<String, String> data = (Map<String, String>) authentication.getDetails();
         String clientId = (String) data.get("client");
         Assert.hasText(clientId, "clientId must have value");
         String type = (String) data.get("type");
@@ -36,7 +38,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         password = (String) authentication.getCredentials();
         //如果你是调用user服务，这边不用注掉
-        //map = userClient.checkUsernameAndPassword(getUserServicePostObject(username, password, type));
+
+        // map = userClient.checkUsernameAndPassword(getUserServicePostObject(username, password, type));
         map = checkUsernameAndPassword(getUserServicePostObject(username, password, type));
 
 
@@ -49,6 +52,21 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         return new CustomAuthenticationToken(customUserDetails);
     }
 
+    /* private AbstractAuthenticationToken authenticateNow(final Authentication authentication)
+             throws AuthenticationException {
+         try {
+             final UserDetails userDetails = loadUserByAssertion(assertion);
+             userDetailsChecker.check(userDetails);
+             return new CasAuthenticationToken(this.key, userDetails,
+                     authentication.getCredentials(),
+                     authoritiesMapper.mapAuthorities(userDetails.getAuthorities()),
+                     userDetails, assertion);
+         }
+         catch (final TicketValidationException e) {
+             throw new BadCredentialsException(e.getMessage(), e);
+         }
+     }
+     private UserDetails loadUserBy*/
     private CustomUserDetails buildCustomUserDetails(String username, String password, String userId, String clientId) {
         CustomUserDetails customUserDetails = new CustomUserDetails.CustomUserDetailsBuilder()
                 .withUserId(userId)

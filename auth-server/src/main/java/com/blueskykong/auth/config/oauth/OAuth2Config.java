@@ -1,7 +1,7 @@
 package com.blueskykong.auth.config.oauth;
 
 import com.blueskykong.auth.security.CustomAuthorizationTokenServices;
-import com.blueskykong.auth.security.CustomTokenEnhancer;
+import com.blueskykong.auth.security.CustomJwtAccessTokenConvert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +27,7 @@ import javax.sql.DataSource;
 @EnableAuthorizationServer
 public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
 
+    final static String SECRET_KEY = "secret";
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -44,6 +45,24 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
     @Bean
     public JdbcTokenStore tokenStore(DataSource dataSource) {
         return new JdbcTokenStore(dataSource);
+    }
+
+    @Bean
+    public JwtAccessTokenConverter accessTokenConverter() {
+        JwtAccessTokenConverter converter = new CustomJwtAccessTokenConvert();
+        converter.setSigningKey(SECRET_KEY);
+        return converter;
+    }
+
+    @Bean
+    public AuthorizationServerTokenServices authorizationServerTokenServices() {
+        CustomAuthorizationTokenServices customTokenServices = new CustomAuthorizationTokenServices();
+        customTokenServices.setTokenStore(tokenStore(dataSource));
+        customTokenServices.setSupportRefreshToken(true);
+        customTokenServices.setReuseRefreshToken(true);
+        customTokenServices.setClientDetailsService(clientDetailsService(dataSource));
+        customTokenServices.setTokenEnhancer(accessTokenConverter());
+        return customTokenServices;
     }
 
     @Override
@@ -65,21 +84,4 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
                 .exceptionTranslator(webResponseExceptionTranslator);
     }
 
-    @Bean
-    public JwtAccessTokenConverter accessTokenConverter() {
-        JwtAccessTokenConverter converter = new CustomTokenEnhancer();
-        converter.setSigningKey("secret");
-        return converter;
-    }
-
-    @Bean
-    public AuthorizationServerTokenServices authorizationServerTokenServices() {
-        CustomAuthorizationTokenServices customTokenServices = new CustomAuthorizationTokenServices();
-        customTokenServices.setTokenStore(tokenStore(dataSource));
-        customTokenServices.setSupportRefreshToken(true);
-        customTokenServices.setReuseRefreshToken(true);
-        customTokenServices.setClientDetailsService(clientDetailsService(dataSource));
-        customTokenServices.setTokenEnhancer(accessTokenConverter());
-        return customTokenServices;
-    }
 }

@@ -3,6 +3,7 @@ package com.blueskykong.auth.exception;
 /**
  * Created by keets on 2016/12/5.
  */
+import com.blueskykong.auth.exception.code.GenericErrorCodes;
 import com.netflix.hystrix.exception.HystrixRuntimeException;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;

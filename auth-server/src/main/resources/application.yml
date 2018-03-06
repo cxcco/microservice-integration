@@ -6,9 +6,9 @@ spring:
       maximum-pool-size: 5
       pool-name: dbcp1
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/auth_test?autoReconnect=true&useSSL=false
-    username: simu
-    password: simu123
+    url: jdbc:mysql://192.168.1.252:3306/auth_test?autoReconnect=true&useSSL=false
+    username: zhnf
+    password: zhnf@123
     type: com.zaxxer.hikari.HikariDataSource
 
 ############################# Redis config #############################
@@ -27,10 +27,11 @@ cache:
   # enable redis
   redis:
     enabled: true
+
 redis:
-  database: 0
+  database: 1
   host:
-    address: localhost
+    address: 192.168.1.252
     password:
     port: 6379
   setup:

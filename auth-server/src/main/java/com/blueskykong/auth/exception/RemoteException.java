@@ -1,5 +1,7 @@
 package com.blueskykong.auth.exception;
 
+import com.blueskykong.auth.exception.code.ErrorCode;
+
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 public class RemoteException extends AbstractException {

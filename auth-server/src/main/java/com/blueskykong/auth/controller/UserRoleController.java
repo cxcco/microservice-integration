@@ -1,9 +1,11 @@
-package com.blueskykong.auth.rest;
+package com.blueskykong.auth.controller;
 
 import com.blueskykong.auth.dto.RolePermissionDTO;
 import com.blueskykong.auth.entity.Permission;
 import com.blueskykong.auth.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -18,23 +20,19 @@ import java.util.UUID;
  * @author keets
  * @date 2017/11/22
  */
-@Path("/")
-public class UserRoleResource {
+@RestController("/api")
+public class UserRoleController {
 
     @Autowired
     SecurityService securityService;
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("/userRolePermissions")
+    @GetMapping(path="/userRolePermissions")
     public Response getUserRolePermissions(@QueryParam("userId") String userId) {
         List<RolePermissionDTO> rolePermissions = securityService.getRolePermissionsByUserId(UUID.fromString(userId));
         return Response.ok(rolePermissions).build();
     }
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("/userPermissions")
+    @GetMapping("/userPermissions")
     public Response getPermissionList(@QueryParam("userId") String userId) {
         List<Permission> permissionList = securityService.getPermissionListByUserId(userId);
         return Response.ok(permissionList).build();

@@ -1,8 +1,9 @@
-package com.blueskykong.auth.rest;
+package com.blueskykong.auth.controller;
 
 import com.blueskykong.auth.dto.ApiClientDTO;
 import com.blueskykong.auth.service.ClientSecretService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -18,36 +19,27 @@ import javax.ws.rs.core.Response;
  * @author keets
  * @date 2017/9/18
  */
-@Path("/")
-public class ClientSecretResource {
+@RestController("/api")
+public class ClientSecretController {
 
     @Autowired
     private ClientSecretService clientSecretService;
 
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/clients")
+    @PostMapping(path = "/clients")
     public Response createClient(ApiClientDTO apiClientDTO) {
         clientSecretService.createClientSecret(apiClientDTO);
         return Response.status(Response.Status.CREATED).build();
     }
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/clients/{clientId}")
-    public Response getClient(@PathParam("clientId") String clientId) {
+    @GetMapping("/clients/{clientId}")
+    public Response getClient(@PathVariable("clientId") String clientId) {
         ApiClientDTO apiClientDTO = clientSecretService.getClientSecretByClientId(clientId);
         return Response.ok(apiClientDTO).build();
     }
 
 
-    @PUT
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/clients/{clientId}")
-    public Response updateClient(@PathParam("clientId") String clientId, ApiClientDTO apiClientDTO) {
+    @PutMapping("/clients/{clientId}")
+    public Response updateClient(@PathVariable("clientId") String clientId, ApiClientDTO apiClientDTO) {
         clientSecretService.updateClientSecret(apiClientDTO);
         return Response.ok().build();
     }

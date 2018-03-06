@@ -1,6 +1,7 @@
 package com.blueskykong.auth.exception;
 
 
+import com.blueskykong.auth.exception.code.ErrorCode;
 import org.springframework.http.HttpStatus;
 
 import java.io.PrintWriter;

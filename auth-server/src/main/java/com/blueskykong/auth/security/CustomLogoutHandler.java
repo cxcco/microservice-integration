@@ -1,6 +1,15 @@
-package com.blueskykong.auth.security.filter;
+/*
+ * Copyright (c) 2018.
+ * 项目名称：auth-gateway-backend
+ * 文件名称：CustomLogoutHandler.java
+ * Date：18-3-6 下午5:44
+ * Author：boni
+ */
 
-import org.apache.commons.lang3.StringUtils;
+package com.blueskykong.auth.security;
+
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +28,8 @@ import javax.servlet.http.HttpServletResponse;
  * @author keets
  * @date 2017/10/17
  */
+@Slf4j
 public class CustomLogoutHandler implements LogoutHandler {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(CustomLogoutHandler.class);
-
 
     @Autowired
     private TokenStore tokenStore;
@@ -33,27 +40,26 @@ public class CustomLogoutHandler implements LogoutHandler {
         String token = request.getHeader("Authorization");
         Assert.hasText(token, "token must be set");
         if (isJwtBearerToken(token)) {
+            // 为什么是6个字节？
             token = token.substring(6);
             OAuth2AccessToken existingAccessToken = tokenStore.readAccessToken(token);
             OAuth2RefreshToken refreshToken;
             if (existingAccessToken != null) {
                 if (existingAccessToken.getRefreshToken() != null) {
-                    LOGGER.info("remove refreshToken!", existingAccessToken.getRefreshToken());
+                    log.info("remove refreshToken!", existingAccessToken.getRefreshToken());
                     refreshToken = existingAccessToken.getRefreshToken();
                     tokenStore.removeRefreshToken(refreshToken);
                 }
-                LOGGER.info("remove existingAccessToken!", existingAccessToken);
+                log.info("remove existingAccessToken!", existingAccessToken);
                 tokenStore.removeAccessToken(existingAccessToken);
             }
             return;
         } else {
             throw new BadClientCredentialsException();
         }
-
     }
 
-
     private boolean isJwtBearerToken(String token) {
-        return StringUtils.countMatches(token, ".") == 2 && (token.startsWith("Bearer") || token.startsWith("bearer"));
+        return StringUtils.countMatches(token, ".") == 2 && (token.toLowerCase().startsWith("bearer"));
     }
 }

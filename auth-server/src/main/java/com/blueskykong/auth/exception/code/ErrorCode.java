@@ -1,4 +1,12 @@
-package com.blueskykong.auth.exception;
+/*
+ * Copyright (c) 2018.
+ * 项目名称：auth-gateway-backend
+ * 文件名称：ErrorCode.java
+ * Date：18-3-6 下午4:37
+ * Author：boni
+ */
+
+package com.blueskykong.auth.exception.code;
 
 public class ErrorCode {
 

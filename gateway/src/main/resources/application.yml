@@ -5,6 +5,8 @@ auth:
     -
       pattern: /web/**
 
+logging:
+  config: "classpath:log4j2.xml"
 
 zuul:
   ribbon:

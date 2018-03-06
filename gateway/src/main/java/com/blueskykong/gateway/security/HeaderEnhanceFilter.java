@@ -4,10 +4,9 @@ import com.blueskykong.gateway.constants.SecurityConstants;
 import com.blueskykong.gateway.properties.PermitAllUrlProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netflix.zuul.context.RequestContext;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.Filter;
@@ -25,10 +24,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-
+@Slf4j
 public class HeaderEnhanceFilter implements Filter {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(HeaderEnhanceFilter.class);
 
     private static final String ANONYMOUS_USER_ID = "d4a65d04-a5a3-465c-8408-405971ac3346";
 
@@ -45,7 +42,7 @@ public class HeaderEnhanceFilter implements Filter {
         String authorization = ((HttpServletRequest) servletRequest).getHeader("Authorization");
         String requestURI = ((HttpServletRequest) servletRequest).getRequestURI();
         // test if request url is permit all , then remove authorization from header
-        LOGGER.info(String.format("Enhance request URI : %s.", requestURI));
+        log.info(String.format("Enhance request URI : %s.", requestURI));
         if(isPermitAllUrl(requestURI) && isNotOAuthEndpoint(requestURI)) {
             HttpServletRequest resetRequest = removeValueFromRequestHeader((HttpServletRequest) servletRequest);
             filterChain.doFilter(resetRequest, servletResponse);
@@ -63,11 +60,11 @@ public class HeaderEnhanceFilter implements Filter {
 
                     RequestContext.getCurrentContext().addZuulRequestHeader(SecurityConstants.USER_ID_IN_HEADER, userId);
                 } catch (Exception e) {
-                    LOGGER.error("Failed to customize header for the request, but still release it as the it would be regarded without any user details.", e);
+                    log.error("Failed to customize header for the request, but still release it as the it would be regarded without any user details.", e);
                 }
             }
         } else {
-            LOGGER.info("Regard this request as anonymous request, so set anonymous user_id in the header.");
+            log.info("Regard this request as anonymous request, so set anonymous user_id in the header.");
             RequestContext.getCurrentContext().addZuulRequestHeader(SecurityConstants.USER_ID_IN_HEADER, ANONYMOUS_USER_ID);
         }
 

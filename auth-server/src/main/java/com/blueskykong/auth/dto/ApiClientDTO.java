@@ -1,7 +1,7 @@
 package com.blueskykong.auth.dto;
 
-import com.blueskykong.auth.exception.ErrorCodes;
-import net.sf.oval.constraint.NotBlank;
+import com.blueskykong.auth.exception.code.ErrorCodes;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
 import java.util.UUID;

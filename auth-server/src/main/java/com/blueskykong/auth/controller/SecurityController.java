@@ -1,4 +1,4 @@
-package com.blueskykong.auth.rest;
+package com.blueskykong.auth.controller;
 
 import com.blueskykong.auth.dao.PermissionDAO;
 import com.blueskykong.auth.dao.RoleDAO;
@@ -7,18 +7,13 @@ import com.blueskykong.auth.dao.UserRoleDAO;
 import com.blueskykong.auth.entity.Permission;
 import com.blueskykong.auth.entity.RolePermission;
 import com.blueskykong.auth.entity.UserRole;
-import com.blueskykong.auth.service.SecurityService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.UUID;
 
@@ -26,13 +21,9 @@ import java.util.UUID;
  * @author keets
  * @date 2017/10/15
  */
-@Path("/")
-public class SecurityResource {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SecurityResource.class);
-
-    @Autowired
-    private SecurityService securityService;
-
+@Slf4j
+@RestController("/api")
+public class SecurityController {
     @Autowired
     private UserRoleDAO userRoleDAO;
 
@@ -45,51 +36,37 @@ public class SecurityResource {
     @Autowired
     private RolePermissionDAO rolePermissionDAO;
 
-    @POST
-    @Path("permission")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
+    @PostMapping(path = "/permission")
     public Response createPermission(Permission permission) {
         permission.setId(UUID.randomUUID());
         permissionDAO.insert(permission);
         return Response.ok(permission.getId()).build();
     }
 
-    @GET
-    @Path("permissions/{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response listPermission(@PathParam("id") String id) {
+    @GetMapping(path = "/permission/{id}")
+    public Response listPermission(@PathVariable("id") String id) {
         UUID pId = UUID.fromString(id);
         Permission permission = permissionDAO.selectById(pId);
         return Response.ok(permission).build();
     }
 
-    @POST
-    @Path("/role-permission")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @PostMapping(path = "/role-permission")
     public Response createRolePermission(RolePermission rolePermission) {
         rolePermissionDAO.insert(rolePermission);
         return Response.ok().build();
     }
 
-    @GET
-    @Path("role")
-    @Produces(MediaType.APPLICATION_JSON)
+    @GetMapping(path = "/role")
     public Response listRoles() {
         return Response.ok(roleDAO.selectAll()).build();
     }
 
-    @GET
-    @Path("permissions")
-    @Produces(MediaType.APPLICATION_JSON)
+    @GetMapping("permissions")
     public Response listPermissions() {
         return Response.ok(permissionDAO.selectAll()).build();
     }
 
-    @POST
-    @Path("user-role")
-    @Produces(MediaType.APPLICATION_JSON)
+    @PostMapping("user-role")
     public Response createUserRole(UserRole userRole) {
         userRole.setUserId(UUID.randomUUID());
         userRoleDAO.insertUtRole(userRole);

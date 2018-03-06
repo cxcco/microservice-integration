@@ -1,5 +1,6 @@
 package com.blueskykong.auth.security;
 
+import com.blueskykong.auth.security.service.CustomUserDetails;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 
 /**
