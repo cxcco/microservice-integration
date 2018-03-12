@@ -1,11 +1,9 @@
-package com.blueskykong.auth.security.filter;
+package com.blueskykong.auth.security.filter.authorization;
 
 
 import com.blueskykong.auth.security.filter.authorization.CustomAccessDecisionManager;
 import com.blueskykong.auth.security.filter.authorization.CustomFilterInvocationMetadataSource;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.SecurityMetadataSource;
 import org.springframework.security.access.intercept.AbstractSecurityInterceptor;
@@ -22,7 +20,7 @@ import java.io.IOException;
  * @author keets
  */
 @Slf4j
-public class CustomSecurityFilter extends AbstractSecurityInterceptor implements Filter {
+public class CustomSecurityInterceptor extends AbstractSecurityInterceptor implements Filter {
     @Autowired
     private CustomFilterInvocationMetadataSource metadataSource;
 

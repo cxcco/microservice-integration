@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.ws.rs.core.Response;
 import java.util.UUID;
 
 /**
@@ -22,7 +21,7 @@ import java.util.UUID;
  * @date 2017/10/15
  */
 @Slf4j
-@RestController("/api")
+@RestController
 public class SecurityController {
     @Autowired
     private UserRoleDAO userRoleDAO;
@@ -36,40 +35,40 @@ public class SecurityController {
     @Autowired
     private RolePermissionDAO rolePermissionDAO;
 
-    @PostMapping(path = "/permission")
-    public Response createPermission(Permission permission) {
+    @PostMapping(path = "/auth/permission")
+    public Object createPermission(Permission permission) {
         permission.setId(UUID.randomUUID());
         permissionDAO.insert(permission);
-        return Response.ok(permission.getId()).build();
+        return "OK";
     }
 
-    @GetMapping(path = "/permission/{id}")
-    public Response listPermission(@PathVariable("id") String id) {
+    @GetMapping(path = "/auth/permission/{id}")
+    public Object listPermission(@PathVariable("id") String id) {
         UUID pId = UUID.fromString(id);
         Permission permission = permissionDAO.selectById(pId);
-        return Response.ok(permission).build();
+        return "OK";
     }
 
-    @PostMapping(path = "/role-permission")
-    public Response createRolePermission(RolePermission rolePermission) {
+    @PostMapping(path = "/auth/role-permission")
+    public Object createRolePermission(RolePermission rolePermission) {
         rolePermissionDAO.insert(rolePermission);
-        return Response.ok().build();
+        return "OK";
     }
 
-    @GetMapping(path = "/role")
-    public Response listRoles() {
-        return Response.ok(roleDAO.selectAll()).build();
+    @GetMapping(path = "/auth/role")
+    public Object listRoles() {
+        return roleDAO.selectAll();
     }
 
-    @GetMapping("permissions")
-    public Response listPermissions() {
-        return Response.ok(permissionDAO.selectAll()).build();
+    @GetMapping(path = "/auth/permissions")
+    public Object listPermissions() {
+        return permissionDAO.selectAll();
     }
 
-    @PostMapping("user-role")
-    public Response createUserRole(UserRole userRole) {
+    @PostMapping(path = "/auth/user-role")
+    public Object createUserRole(UserRole userRole) {
         userRole.setUserId(UUID.randomUUID());
         userRoleDAO.insertUtRole(userRole);
-        return Response.ok().build();
+        return "OK";
     }
 }

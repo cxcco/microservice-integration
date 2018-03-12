@@ -2,7 +2,7 @@
  * Copyright (c) 2018.
  * 项目名称：auth-gateway-backend
  * 文件名称：CustomUserDetails.java
- * Date：18-3-6 下午3:30
+ * Date：18-3-8 上午7:44
  * Author：boni
  */
 
@@ -21,7 +21,9 @@ import java.util.stream.Collectors;
  * @date 2017/8/5
  */
 public class CustomUserDetails implements UserDetails {
-    static final long serialVersionUID = -7588980448693010399L;
+
+    private static Long serialVersionUID = -7588980448693010309L;
+
     private String username;
 
     private String password;

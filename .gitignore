@@ -19,3 +19,4 @@ tmp.*
 /api-gateway/src/main/resources/*.yml
 
 *.yml
+*.log

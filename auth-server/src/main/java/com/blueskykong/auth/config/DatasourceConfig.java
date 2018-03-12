@@ -6,7 +6,6 @@ import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -14,11 +13,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 
-/**
- * Created by keets on 2016/12/5.
- */
 @Configuration
-@EnableTransactionManagement(mode = AdviceMode.ASPECTJ)
+@EnableTransactionManagement
 @MapperScan("com.blueskykong.auth.dao.mapper")
 public class DatasourceConfig {
 
@@ -30,7 +26,6 @@ public class DatasourceConfig {
 
     @Bean
     public SqlSessionFactory sqlSessionFactoryBean() throws Exception {
-
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource());
 
@@ -41,5 +36,4 @@ public class DatasourceConfig {
 
         return sqlSessionFactoryBean.getObject();
     }
-
 }

@@ -1,4 +1,12 @@
-package com.blueskykong.auth.security;
+/*
+ * Copyright (c) 2018.
+ * 项目名称：auth-gateway-backend
+ * 文件名称：CustomAuthorizationTokenServices.java
+ * Date：18-3-7 下午10:21
+ * Author：boni
+ */
+
+package com.blueskykong.auth.security.service;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
@@ -21,7 +29,7 @@ import java.util.Set;
 import java.util.UUID;
 
 /**
- * Created by keets on 2017/8/5.
+ * 实现Token的必要管理
  */
 public class CustomAuthorizationTokenServices implements AuthorizationServerTokenServices, ConsumerTokenServices {
 

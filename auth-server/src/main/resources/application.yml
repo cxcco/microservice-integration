@@ -5,8 +5,8 @@ spring:
       minimum-idle: 1
       maximum-pool-size: 5
       pool-name: dbcp1
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.1.252:3306/auth_test?autoReconnect=true&useSSL=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://120.76.165.56:3306/auth_test?autoReconnect=true&useSSL=false
     username: zhnf
     password: zhnf@123
     type: com.zaxxer.hikari.HikariDataSource

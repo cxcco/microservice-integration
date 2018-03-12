@@ -1,7 +1,7 @@
 package com.blueskykong.auth.config.oauth;
 
-import com.blueskykong.auth.security.CustomAuthorizationTokenServices;
-import com.blueskykong.auth.security.CustomJwtAccessTokenConvert;
+import com.blueskykong.auth.security.convert.CustomJwtAccessTokenConvert;
+import com.blueskykong.auth.security.service.CustomAuthorizationTokenServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,9 +25,10 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableAuthorizationServer
-public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
+public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
-    final static String SECRET_KEY = "secret";
+    private static final String SIGN_KEY = "secret";
+
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -50,7 +51,7 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
         JwtAccessTokenConverter converter = new CustomJwtAccessTokenConvert();
-        converter.setSigningKey(SECRET_KEY);
+        converter.setSigningKey(SIGN_KEY);
         return converter;
     }
 
@@ -60,21 +61,34 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
         customTokenServices.setTokenStore(tokenStore(dataSource));
         customTokenServices.setSupportRefreshToken(true);
         customTokenServices.setReuseRefreshToken(true);
+        customTokenServices.setRefreshTokenValiditySeconds(60 * 60 * 24 * 7);//7days
+        customTokenServices.setAccessTokenValiditySeconds(60 * 60 * 2); //2hours
         customTokenServices.setClientDetailsService(clientDetailsService(dataSource));
         customTokenServices.setTokenEnhancer(accessTokenConverter());
         return customTokenServices;
     }
 
+    //使用SpEL表达式来配置TokenEndpoint的安全约束规则标准
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
         security.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
     }
 
+    //配置ClientDetailsService
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.withClientDetails(clientDetailsService(dataSource));
     }
 
+    //配置授权（authorization）以及token访问端点和令牌服务(token services)
+    /* 默认的path
+            /oauth/authorize：授权端点。
+            /oauth/token：令牌端点。
+            /oauth/confirm_access：用户确认授权提交端点。
+            /oauth/error：授权服务错误信息端点。
+            /oauth/check_token：用于资源服务访问的令牌解析端点。
+            /oauth/token_key：提供公有密匙的端点，如果你使用JWT令牌的话。
+     */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints.authenticationManager(authenticationManager)
@@ -83,5 +97,4 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
                 .accessTokenConverter(accessTokenConverter())
                 .exceptionTranslator(webResponseExceptionTranslator);
     }
-
 }

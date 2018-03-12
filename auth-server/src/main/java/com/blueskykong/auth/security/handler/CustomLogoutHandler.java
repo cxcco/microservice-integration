@@ -2,11 +2,11 @@
  * Copyright (c) 2018.
  * 项目名称：auth-gateway-backend
  * 文件名称：CustomLogoutHandler.java
- * Date：18-3-6 下午5:44
+ * Date：18-3-7 下午10:22
  * Author：boni
  */
 
-package com.blueskykong.auth.security;
+package com.blueskykong.auth.security.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -40,7 +40,7 @@ public class CustomLogoutHandler implements LogoutHandler {
         String token = request.getHeader("Authorization");
         Assert.hasText(token, "token must be set");
         if (isJwtBearerToken(token)) {
-            // 为什么是6个字节？
+            //取出Token值
             token = token.substring(6);
             OAuth2AccessToken existingAccessToken = tokenStore.readAccessToken(token);
             OAuth2RefreshToken refreshToken;

@@ -10,8 +10,6 @@ package com.blueskykong.auth.security.filter.authorization;
 
 import com.blueskykong.auth.security.CustomGrantedAuthority;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
@@ -24,7 +22,6 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
-import java.util.Iterator;
 
 /**
  * @author keets
@@ -33,34 +30,43 @@ import java.util.Iterator;
 @Component
 public class CustomAccessDecisionManager implements AccessDecisionManager {
     /**
-     * @param authentication 用户权限
-     * @param object         用户请求
-     * @param configAttributes    所需要的权限
+     * @param authentication   用户权限
+     * @param object           用户请求
+     * @param configAttributes 所需要的权限
      * @throws AccessDeniedException
      * @throws InsufficientAuthenticationException
      */
     @Override
     public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {
         log.info("decide url and permission");
-        if (configAttributes == null) {
-            return;
-        }
         HttpServletRequest request = ((FilterInvocation) object).getHttpRequest();
-        String url,method;
+        String url, method;
+        if ("anonymousUser".equals(authentication.getPrincipal())
+                || matches("/images/**", request)
+                || matches("/js/**", request)
+                || matches("/css/**", request)
+                || matches("/fonts/**", request)
+                || matches("/index.html", request)
+                || matches("/favicon.ico", request)
+                || matches("/oauth/**", request)
+                || matches("/auth/**",request)) {
+            return;
+        } else {
             for (GrantedAuthority ga : authentication.getAuthorities()) {
                 if (ga instanceof CustomGrantedAuthority) {
                     CustomGrantedAuthority grantedAuthority = (CustomGrantedAuthority) ga;
                     url = grantedAuthority.getPermissionUrl();
                     method = grantedAuthority.getMethod();
-                    if (matchers(url, request)) {
+                    if (matches(url, request)) {
                         if (method.equals(request.getMethod()) || "ALL".equals(method)) {
                             return;
                         }
                     }
                 }
             }
-        log.error("AccessDecisionManager: no right!");
-        throw new AccessDeniedException("AccessDecisionManager: no right!");
+        }
+        log.error("no right!");
+        throw new AccessDeniedException("no right");
     }
 
     @Override
@@ -74,7 +80,7 @@ public class CustomAccessDecisionManager implements AccessDecisionManager {
         return true;
     }
 
-    private boolean matchers(String url, HttpServletRequest request) {
+    private boolean matches(String url, HttpServletRequest request) {
         AntPathRequestMatcher matcher = new AntPathRequestMatcher(url);
         return matcher.matches(request);
     }
