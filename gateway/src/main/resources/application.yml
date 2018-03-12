@@ -5,8 +5,6 @@ auth:
     -
       pattern: /web/**
 
-logging:
-  config: "classpath:log4j2.xml"
 
 zuul:
   ribbon:
@@ -27,7 +25,7 @@ zuul:
       serviceId: authdemo
       sensitiveHeaders: Cookie,Set-Cookie
     auth:
-      path: /auth/**
+      path: /login/**
       ignoredPatterns: /consul
       serviceId: auth
       sensitiveHeaders: Cookie,Set-Cookie
@@ -45,13 +43,13 @@ hystrix:
             timeoutInMilliseconds: 1000
 
 
-#security:
-#  oauth2:
-#    client:
-#      accessTokenUri: /oauth/token
-#      clientId: frontend
-#      clientSecret: frontend
-#    resource:
-#      userInfoUri: /user
-#      token-info-uri: /oauth/check_token
-#  filter-order: 1
+security:
+  oauth2:
+    client:
+      accessTokenUri: /oauth/token
+      clientId: frontend
+      clientSecret: frontend
+    resource:
+      userInfoUri: /user
+      token-info-uri: /oauth/check_token
+  filter-order: 1

@@ -1,13 +1,7 @@
 package com.blueskykong.gateway.config;
 
 import com.blueskykong.gateway.properties.PermitAllUrlProperties;
-import org.apache.catalina.Context;
-import org.apache.catalina.connector.Connector;
-import org.apache.tomcat.util.descriptor.web.SecurityCollection;
-import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
-import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +16,6 @@ public class ServiceConfig {
 
     @Value("${server.port}")
     private int securePort;
-
 
 
     @Bean

@@ -1,54 +1,62 @@
-package com.blueskykong.gateway.security;
+/*
+ * Copyright (c) 2018.
+ * 项目名称：auth-gateway-backend
+ * 文件名称：MyZuulFilter.java
+ * Date：18-3-12 下午9:33
+ * Author：boni
+ */
+
+package com.blueskykong.gateway.filter;
 
 import com.blueskykong.gateway.constants.SecurityConstants;
 import com.blueskykong.gateway.properties.PermitAllUrlProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
-import java.io.IOException;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Slf4j
-public class HeaderEnhanceFilter implements Filter {
-
+@Component
+public class HeaderEnhanceFilter extends ZuulFilter {
     private static final String ANONYMOUS_USER_ID = "d4a65d04-a5a3-465c-8408-405971ac3346";
 
     @Autowired
     private PermitAllUrlProperties permitAllUrlProperties;
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-
+    public String filterType() {
+        return "pre";
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        String authorization = ((HttpServletRequest) servletRequest).getHeader("Authorization");
-        String requestURI = ((HttpServletRequest) servletRequest).getRequestURI();
+    public int filterOrder() {
+        return 0;
+    }
+
+    @Override
+    public boolean shouldFilter() {
+        return true;
+    }
+
+    @Override
+    public Object run() {
+        RequestContext ctx = RequestContext.getCurrentContext();
+        HttpServletRequest servletRequest = ctx.getRequest();
+        String authorization = servletRequest.getHeader("Authorization");
+        String requestURI = servletRequest.getRequestURI();
         // test if request url is permit all , then remove authorization from header
         log.info(String.format("Enhance request URI : %s.", requestURI));
-        if(isPermitAllUrl(requestURI) && isNotOAuthEndpoint(requestURI)) {
+        if (isPermitAllUrl(requestURI) && isNotOAuthEndpoint(requestURI)) {
             HttpServletRequest resetRequest = removeValueFromRequestHeader((HttpServletRequest) servletRequest);
-            filterChain.doFilter(resetRequest, servletResponse);
-            return;
-        }
-        if (StringUtils.isNotEmpty(authorization)) {
+        } else if (StringUtils.isNotEmpty(authorization)) {
             if (isJwtBearerToken(authorization)) {
                 try {
                     authorization = StringUtils.substringBetween(authorization, ".");
@@ -58,7 +66,7 @@ public class HeaderEnhanceFilter implements Filter {
 
                     String userId = (String) properties.get(SecurityConstants.USER_ID_IN_HEADER);
 
-                    RequestContext.getCurrentContext().addZuulRequestHeader(SecurityConstants.USER_ID_IN_HEADER, userId);
+                    ctx.addZuulRequestHeader(SecurityConstants.USER_ID_IN_HEADER, userId);
                 } catch (Exception e) {
                     log.error("Failed to customize header for the request, but still release it as the it would be regarded without any user details.", e);
                 }
@@ -67,13 +75,7 @@ public class HeaderEnhanceFilter implements Filter {
             log.info("Regard this request as anonymous request, so set anonymous user_id in the header.");
             RequestContext.getCurrentContext().addZuulRequestHeader(SecurityConstants.USER_ID_IN_HEADER, ANONYMOUS_USER_ID);
         }
-
-        filterChain.doFilter(servletRequest, servletResponse);
-    }
-
-    @Override
-    public void destroy() {
-
+        return null;
     }
 
     private boolean isJwtBearerToken(String token) {
