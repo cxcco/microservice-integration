@@ -1,4 +1,12 @@
-package com.blueskykong.auth.security;
+/*
+ * Copyright (c) 2018.
+ * 项目名称：auth-gateway-backend
+ * 文件名称：CustomJwtAccessTokenConvert.java
+ * Date：18-3-7 下午10:20
+ * Author：boni
+ */
+
+package com.blueskykong.auth.security.convert;
 
 import com.blueskykong.auth.security.service.CustomUserDetails;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
