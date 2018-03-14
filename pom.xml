@@ -31,7 +31,8 @@
     <modules>
         <module>gateway</module>
         <module>auth-server</module>
-        <module>backend-server</module>
+        <module>backend-demo</module>
+        <module>monitor-server</module>
     </modules>
 
     <properties>

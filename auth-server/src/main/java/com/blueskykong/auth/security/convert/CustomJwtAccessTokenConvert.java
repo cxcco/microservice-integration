@@ -8,7 +8,7 @@
 
 package com.blueskykong.auth.security.convert;
 
-import com.blueskykong.auth.security.service.CustomUserDetails;
+import com.blueskykong.auth.security.extendsclz.CustomUserDetails;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;

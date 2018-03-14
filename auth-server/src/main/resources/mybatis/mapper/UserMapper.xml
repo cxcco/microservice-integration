@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2018.
+  ~ 项目名称：auth-gateway-backend
+  ~ 文件名称：UserMapper.xml
+  ~ Date：18-3-13 上午10:51
+  ~ Author：boni
+  -->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blueskykong.auth.dao.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.blueskykong.auth.entity.User">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="user_id" jdbcType="VARCHAR" property="userId"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="mobile_phone" jdbcType="VARCHAR" property="mobilePhone"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    id,user_id,password,user_name,email,mobile_phone
+  </sql>
+
+    <select id="selectByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where user_name = #{userName,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByUserName" parameterType="java.lang.String">
+    delete from user
+    where user_name = #{userName,jdbcType=VARCHAR}
+  </delete>
+
+    <insert id="insertUser" parameterType="com.blueskykong.auth.entity.User">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="mobilePhone != null">
+                mobile_phone,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,javaType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=TIMESTAMP},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="mobilePhone != null">
+                #{mobilePhone,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByUserName" parameterType="com.blueskykong.auth.entity.User">
+        update user
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,javaType=String,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,javaType=String,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,javaType=String,jdbcType=VARCHAR},
+            </if>
+            <if test="mobilePhone != null">
+                mobile_phone = #{mobilePhone,javaType=String,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where user_name = #{userName,jdbcType=VARCHAR}
+    </update>
+    <resultMap id="UserClientIdDTO" type="com.blueskykong.auth.dto.UserClientIdDTO">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="client_id" jdbcType="VARCHAR" property="clientId"/>
+        <result column="user_id" jdbcType="VARCHAR" property="userId"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="mobile_phone" jdbcType="VARCHAR" property="mobilePhone"/>
+    </resultMap>
+
+    <select id="getUserClientDTOByUserName" resultMap="UserClientIdDTO" parameterType="String">
+        select user.id,user.password,user.user_name,user.email,user.mobile_phone,user.user_id,oat.client_id
+        from user ,
+        oauth_access_token oat
+        WHERE
+        oat.user_name=user.user_name
+        and
+        user.user_name= #{userName,jdbcType=VARCHAR}
+    </select>
+</mapper>

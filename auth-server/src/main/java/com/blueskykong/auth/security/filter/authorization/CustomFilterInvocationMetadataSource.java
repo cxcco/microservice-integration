@@ -8,14 +8,11 @@
 
 package com.blueskykong.auth.security.filter.authorization;
 
-import com.blueskykong.auth.security.CustomConfigAttribute;
+import com.blueskykong.auth.security.extendsclz.CustomConfigAttribute;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.security.access.ConfigAttribute;
-import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;

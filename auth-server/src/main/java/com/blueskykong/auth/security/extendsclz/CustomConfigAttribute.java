@@ -2,11 +2,11 @@
  * Copyright (c) 2018.
  * 项目名称：auth-gateway-backend
  * 文件名称：CustomConfigAttribute.java
- * Date：18-3-7 下午8:39
+ * Date：18-3-13 下午1:21
  * Author：boni
  */
 
-package com.blueskykong.auth.security;
+package com.blueskykong.auth.security.extendsclz;
 
 import org.springframework.security.access.ConfigAttribute;
 

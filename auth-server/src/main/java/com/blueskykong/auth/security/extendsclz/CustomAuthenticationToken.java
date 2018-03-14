@@ -1,6 +1,13 @@
-package com.blueskykong.auth.security;
+/*
+ * Copyright (c) 2018.
+ * 项目名称：auth-gateway-backend
+ * 文件名称：CustomAuthenticationToken.java
+ * Date：18-3-13 下午1:21
+ * Author：boni
+ */
 
-import com.blueskykong.auth.security.service.CustomUserDetails;
+package com.blueskykong.auth.security.extendsclz;
+
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -8,7 +15,6 @@ import org.springframework.security.core.userdetails.UserDetails;
  * Created by keets on 2017/8/5.
  */
 public class CustomAuthenticationToken extends AbstractAuthenticationToken {
-    static final long serialVersionUID = 8336497699509590280L;
 
     //private CustomUserDetails userDetails;
     private UserDetails userDetails;

@@ -1,0 +1,8 @@
+server:
+  port: 10000
+spring:
+  application:
+    name : monitor-server
+    #表示当前程序不使用sleuth
+  sleuth:
+    enabled: false

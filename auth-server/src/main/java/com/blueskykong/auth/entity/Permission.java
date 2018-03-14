@@ -11,8 +11,8 @@ import java.util.UUID;
 public class Permission {
 
     private UUID id;
-
-    private String permission;
-
+    private String permissionUrl;
+    private String method;
     private String description;
+    private String roleName;
 }

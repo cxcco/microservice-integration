@@ -18,7 +18,7 @@ public interface PermissionDAO {
 
     Permission selectById(UUID id);
 
-    void updateName(UUID id, String newName);
+    void updateUrl(UUID id, String newPermissionUrl);
 
     List<Permission> selectAll();
 

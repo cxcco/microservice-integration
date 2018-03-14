@@ -22,7 +22,7 @@ public interface PermissionMapper {
 
     int updateById(Permission record);
 
-    void updateName(UUID id, String newName);
+    void updateUrl(UUID id, String newPermissionUrl);
 
     List<Permission> selectByMap(Map paraMap);
 }

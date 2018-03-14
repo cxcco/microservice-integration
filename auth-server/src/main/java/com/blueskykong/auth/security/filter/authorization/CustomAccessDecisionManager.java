@@ -8,8 +8,11 @@
 
 package com.blueskykong.auth.security.filter.authorization;
 
-import com.blueskykong.auth.security.CustomGrantedAuthority;
+import com.blueskykong.auth.security.extendsclz.CustomGrantedAuthority;
+import com.blueskykong.auth.security.extendsclz.CustomUserDetails;
+import com.blueskykong.auth.security.service.CustomUserDetailsService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
@@ -29,6 +32,8 @@ import java.util.Collection;
 @Slf4j
 @Component
 public class CustomAccessDecisionManager implements AccessDecisionManager {
+    @Autowired
+    CustomUserDetailsService customUserDetailsService;
     /**
      * @param authentication   用户权限
      * @param object           用户请求
@@ -49,10 +54,11 @@ public class CustomAccessDecisionManager implements AccessDecisionManager {
                 || matches("/index.html", request)
                 || matches("/favicon.ico", request)
                 || matches("/oauth/**", request)
-                || matches("/auth/**",request)) {
+                ) {
             return;
         } else {
-            for (GrantedAuthority ga : authentication.getAuthorities()) {
+            CustomUserDetails userDetails = (CustomUserDetails)customUserDetailsService.loadUserByUsername(authentication.getName());
+            for (GrantedAuthority ga : userDetails.getAuthorities()) {
                 if (ga instanceof CustomGrantedAuthority) {
                     CustomGrantedAuthority grantedAuthority = (CustomGrantedAuthority) ga;
                     url = grantedAuthority.getPermissionUrl();

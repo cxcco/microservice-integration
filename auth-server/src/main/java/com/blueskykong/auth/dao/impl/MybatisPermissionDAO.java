@@ -36,8 +36,8 @@ public class MybatisPermissionDAO implements PermissionDAO {
     }
 
     @Override
-    public void updateName(UUID id, String name) {
-        permissionMapper.updateName(id, name);
+    public void updateUrl(UUID id, String newPermissionUrl) {
+        permissionMapper.updateUrl(id, newPermissionUrl);
     }
 
     @Override

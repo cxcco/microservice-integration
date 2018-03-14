@@ -1,7 +1,7 @@
 package com.blueskykong.auth.config.oauth;
 
-import com.blueskykong.auth.security.handler.CustomLogoutHandler;
 import com.blueskykong.auth.security.filter.authorization.CustomSecurityInterceptor;
+import com.blueskykong.auth.security.handler.CustomLogoutHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -31,10 +31,10 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
                 .addLogoutHandler(customLogoutHandler());
     }
 
-     @Bean
-     public CustomSecurityInterceptor customSecurityInterceptor() {
-         return new CustomSecurityInterceptor();
-     }
+    @Bean
+    public CustomSecurityInterceptor customSecurityInterceptor() {
+        return new CustomSecurityInterceptor();
+    }
 
     @Bean
     public CustomLogoutHandler customLogoutHandler() {

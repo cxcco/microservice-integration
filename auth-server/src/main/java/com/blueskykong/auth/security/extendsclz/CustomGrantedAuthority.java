@@ -2,11 +2,11 @@
  * Copyright (c) 2018.
  * 项目名称：auth-gateway-backend
  * 文件名称：CustomGrantedAuthority.java
- * Date：18-3-6 下午3:49
+ * Date：18-3-13 下午1:08
  * Author：boni
  */
 
-package com.blueskykong.auth.security;
+package com.blueskykong.auth.security.extendsclz;
 
 import org.springframework.security.core.GrantedAuthority;
 

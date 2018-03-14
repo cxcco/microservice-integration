@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: auth-server
   datasource:
     hikari:
       connection-test-query: SELECT 1
@@ -6,11 +8,15 @@ spring:
       maximum-pool-size: 5
       pool-name: dbcp1
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://120.76.165.56:3306/auth_test?autoReconnect=true&useSSL=false
+    url: jdbc:mysql://192.168.1.252:3306/auth_test?autoReconnect=true&useSSL=false
     username: zhnf
     password: zhnf@123
     type: com.zaxxer.hikari.HikariDataSource
-
+  zipkin:
+    base-url: http://localhost:10000
+  sleuth:
+    sampler:
+      percentage: 1
 ############################# Redis config #############################
 cache:
   # pool config
@@ -49,3 +55,26 @@ hystrix:
           thread:
             timeoutInMilliseconds: 10000
 
+zuul:
+  ribbon:
+    eager-load:
+      enabled: true     #zuul饥饿加载
+  host:
+    maxTotalConnections: 200
+    maxPerRouteConnections: 20
+  routes:
+    user:
+      path: /user/**
+      ignoredPatterns: /consul
+      serviceId: user
+      sensitiveHeaders: Cookie,Set-Cookie
+    demo:
+      path: /demo/**
+      ignoredPatterns: /consul
+      serviceId: demo
+      sensitiveHeaders: Cookie,Set-Cookie
+#    auth:
+#      path: /login/**
+#      ignoredPatterns: /consul
+#      serviceId: auth
+#      sensitiveHeaders: Cookie,Set-Cookie

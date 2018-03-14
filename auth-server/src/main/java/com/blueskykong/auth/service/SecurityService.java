@@ -1,30 +1,15 @@
 package com.blueskykong.auth.service;
 
-import com.blueskykong.auth.dao.PermissionDAO;
-import com.blueskykong.auth.dao.RoleDAO;
-import com.blueskykong.auth.dao.RolePermissionDAO;
-import com.blueskykong.auth.dao.UserAccessDAO;
-import com.blueskykong.auth.dao.UserRoleDAO;
-import com.blueskykong.auth.dto.DefaultRole;
-import com.blueskykong.auth.dto.DefaultRoles;
-import com.blueskykong.auth.dto.RolePermissionDTO;
-import com.blueskykong.auth.dto.UserRoleDTO;
-import com.blueskykong.auth.entity.Permission;
-import com.blueskykong.auth.entity.Role;
-import com.blueskykong.auth.entity.RolePermission;
-import com.blueskykong.auth.entity.UserAccess;
-import com.blueskykong.auth.entity.UserRole;
+import com.blueskykong.auth.dao.*;
+import com.blueskykong.auth.dto.*;
+import com.blueskykong.auth.entity.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author keets
@@ -51,9 +36,13 @@ public class SecurityService {
     @Autowired
     private UserRoleDAO userRoleDAO;
 
+    @Autowired
+    private UserDAO userDAO;
+
     public List<Permission> getPermissionListByUserId(String userId) {
         Map<String, UUID> map = new HashMap<>();
-        map.put("userId", UUID.fromString(userId));
+        UUID _userId = UUID.fromString(userId);
+        map.put("userId", _userId);
         return permissionDAO.getPermissionList(map);
     }
 
@@ -93,6 +82,14 @@ public class SecurityService {
         userRoleDAO.insertUtRole(UserRole);
     }
 
+    public User getUserByUserName(String userName){
+        return userDAO.selectByUserName(userName);
+    }
+
+    public UserClientIdDTO getUserDTOByUserName(String userName) {
+        UserClientIdDTO user = userDAO.getUserClientDTOByUserName(userName);
+        return user;
+    }
 
     public List<RolePermissionDTO> getRolesByUserId(UUID userId) {
 

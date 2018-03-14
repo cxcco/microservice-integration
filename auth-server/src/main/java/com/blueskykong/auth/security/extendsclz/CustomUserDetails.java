@@ -2,15 +2,19 @@
  * Copyright (c) 2018.
  * 项目名称：auth-gateway-backend
  * 文件名称：CustomUserDetails.java
- * Date：18-3-8 上午7:44
+ * Date：18-3-13 下午1:08
  * Author：boni
  */
 
-package com.blueskykong.auth.security.service;
+package com.blueskykong.auth.security.extendsclz;
 
+import com.blueskykong.auth.dto.UserClientIdDTO;
+import com.blueskykong.auth.entity.User;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
@@ -20,9 +24,12 @@ import java.util.stream.Collectors;
  * @author keets
  * @date 2017/8/5
  */
+@Data
 public class CustomUserDetails implements UserDetails {
 
     private static Long serialVersionUID = -7588980448693010309L;
+
+    private Long id;
 
     private String username;
 
@@ -34,33 +41,18 @@ public class CustomUserDetails implements UserDetails {
 
     private String clientId;
 
+    private String email;
+
+    private String mobilePhone;
+
     private Collection<? extends GrantedAuthority> authorities;
 
-    private List<String> roles;
+    private List<String> roles = new ArrayList<>();
 
-    public String getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
-    }
-
-    public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
-        this.authorities = authorities;
     }
 
     @Override
@@ -68,17 +60,9 @@ public class CustomUserDetails implements UserDetails {
         return this.password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     @Override
     public String getUsername() {
         return this.username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     @Override
@@ -101,18 +85,6 @@ public class CustomUserDetails implements UserDetails {
         return enabled;
     }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public void setRole(List<String> roles) {
-        this.roles = roles;
-    }
-
-    public List<String> getRoles() {
-        return roles;
-    }
-
     public static class CustomUserDetailsBuilder {
         private CustomUserDetails userDetails = new CustomUserDetails();
 
@@ -121,24 +93,19 @@ public class CustomUserDetails implements UserDetails {
             return this;
         }
 
-        public CustomUserDetailsBuilder withUsername(String username) {
-            userDetails.setUsername(username);
-            userDetails.setAuthorities(null);
+        public CustomUserDetailsBuilder withUserObject(User user) {
+            userDetails.setUsername(user.getUserName());
+            userDetails.setPassword(user.getPassword());
+            userDetails.setUserId(user.getUserId());
+            userDetails.setEmail(user.getEmail());
+            userDetails.setMobilePhone(user.getMobilePhone());
+            userDetails.setId(user.getId());
+           // userDetails.setClientId(user.getClientId());
             return this;
         }
 
-        public CustomUserDetailsBuilder withPassword(String password) {
-            userDetails.setPassword(password);
-            return this;
-        }
-
-        public CustomUserDetailsBuilder withClientId(String clientId) {
-            userDetails.setClientId(clientId);
-            return this;
-        }
-
-        public CustomUserDetailsBuilder withUserId(String userId) {
-            userDetails.setUserId(userId);
+        public CustomUserDetailsBuilder withAuthority(Collection<? extends GrantedAuthority> authorities) {
+            userDetails.setAuthorities(authorities);
             return this;
         }
 

@@ -73,7 +73,7 @@ public class HeaderEnhanceFilter extends ZuulFilter {
             }
         } else {
             log.info("Regard this request as anonymous request, so set anonymous user_id in the header.");
-            RequestContext.getCurrentContext().addZuulRequestHeader(SecurityConstants.USER_ID_IN_HEADER, ANONYMOUS_USER_ID);
+            ctx.addZuulRequestHeader(SecurityConstants.USER_ID_IN_HEADER, ANONYMOUS_USER_ID);
         }
         return null;
     }
