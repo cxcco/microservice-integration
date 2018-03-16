@@ -2,11 +2,11 @@
  * Copyright (c) 2018.
  * 项目名称：auth-gateway-backend
  * 文件名称：ErrorCode.java
- * Date：18-3-6 下午4:37
+ * Date：18-3-16 下午4:05
  * Author：boni
  */
 
-package com.blueskykong.auth.exception.code;
+package com.wisfarm.auth.exception.code;
 
 public class ErrorCode {
 

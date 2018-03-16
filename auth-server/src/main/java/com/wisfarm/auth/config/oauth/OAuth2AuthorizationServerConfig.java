@@ -1,7 +1,15 @@
-package com.blueskykong.auth.config.oauth;
+/*
+ * Copyright (c) 2018.
+ * 项目名称：auth-gateway-backend
+ * 文件名称：OAuth2AuthorizationServerConfig.java
+ * Date：18-3-16 下午4:05
+ * Author：boni
+ */
 
-import com.blueskykong.auth.security.authorization.convert.CustomJwtAccessTokenConvert;
-import com.blueskykong.auth.security.authorization.service.CustomAuthorizationTokenServices;
+package com.wisfarm.auth.config.oauth;
+
+import com.wisfarm.auth.security.authorization.convert.CustomJwtAccessTokenConvert;
+import com.wisfarm.auth.security.authorization.service.CustomAuthorizationTokenServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,10 +26,6 @@ import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
 import javax.sql.DataSource;
-
-/**
- * Created by keets on 2017/9/25.
- */
 
 @Configuration
 @EnableAuthorizationServer

@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2018.
  * 项目名称：auth-gateway-backend
- * 文件名称：OAuth2FeignRequestInterceptor.java
- * Date：18-3-15 下午6:00
+ * 文件名称：CustomFeignRequestInterceptor.java
+ * Date：18-3-16 下午4:12
  * Author：boni
  */
 package com.wisfarm.gateway.feign;
@@ -11,7 +11,6 @@ import com.wisfarm.gateway.constants.SecurityConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.cloud.security.oauth2.client.feign.OAuth2FeignRequestInterceptor;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;

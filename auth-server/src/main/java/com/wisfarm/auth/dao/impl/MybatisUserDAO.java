@@ -2,19 +2,23 @@
  * Copyright (c) 2018.
  * 项目名称：auth-gateway-backend
  * 文件名称：MybatisUserDAO.java
- * Date：18-3-13 上午11:03
+ * Date：18-3-16 下午4:05
  * Author：boni
  */
 
-package com.blueskykong.auth.dao.impl;
+package com.wisfarm.auth.dao.impl;
 
-import com.blueskykong.auth.dao.RoleDAO;
-import com.blueskykong.auth.dao.UserDAO;
-import com.blueskykong.auth.dao.mapper.RoleMapper;
-import com.blueskykong.auth.dao.mapper.UserMapper;
-import com.blueskykong.auth.dto.UserClientIdDTO;
-import com.blueskykong.auth.entity.Role;
-import com.blueskykong.auth.entity.User;
+import com.wisfarm.auth.dao.RoleDAO;
+import com.wisfarm.auth.dao.UserDAO;
+import com.wisfarm.auth.dao.mapper.RoleMapper;
+import com.wisfarm.auth.dao.mapper.UserMapper;
+import com.wisfarm.auth.dto.UserClientIdDTO;
+import com.wisfarm.auth.entity.Role;
+import com.wisfarm.auth.entity.User;
+import com.wisfarm.auth.dao.UserDAO;
+import com.wisfarm.auth.dao.mapper.UserMapper;
+import com.wisfarm.auth.dto.UserClientIdDTO;
+import com.wisfarm.auth.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

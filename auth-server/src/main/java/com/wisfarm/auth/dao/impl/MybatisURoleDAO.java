@@ -1,9 +1,17 @@
-package com.blueskykong.auth.dao.impl;
+/*
+ * Copyright (c) 2018.
+ * 项目名称：auth-gateway-backend
+ * 文件名称：MybatisURoleDAO.java
+ * Date：18-3-16 下午4:05
+ * Author：boni
+ */
 
-import com.blueskykong.auth.dao.UserRoleDAO;
-import com.blueskykong.auth.dao.mapper.UserRoleMapper;
-import com.blueskykong.auth.dto.UserRoleDTO;
-import com.blueskykong.auth.entity.UserRole;
+package com.wisfarm.auth.dao.impl;
+
+import com.wisfarm.auth.dao.UserRoleDAO;
+import com.wisfarm.auth.dao.mapper.UserRoleMapper;
+import com.wisfarm.auth.dto.UserRoleDTO;
+import com.wisfarm.auth.entity.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

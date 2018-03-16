@@ -1,9 +1,18 @@
-package com.blueskykong.auth.dao.impl;
+/*
+ * Copyright (c) 2018.
+ * 项目名称：auth-gateway-backend
+ * 文件名称：MybatisClientSecretDAO.java
+ * Date：18-3-16 下午4:05
+ * Author：boni
+ */
 
-import com.blueskykong.auth.dao.ClientSecretDAO;
-import com.blueskykong.auth.dao.mapper.ClientSecretMapper;
-import com.blueskykong.auth.entity.ClientSecret;
-import com.blueskykong.auth.entity.ClientSecretStatus;
+package com.wisfarm.auth.dao.impl;
+
+import com.wisfarm.auth.dao.ClientSecretDAO;
+import com.wisfarm.auth.dao.mapper.ClientSecretMapper;
+import com.wisfarm.auth.entity.ClientSecret;
+import com.wisfarm.auth.entity.ClientSecretStatus;
+import com.wisfarm.auth.dao.mapper.ClientSecretMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

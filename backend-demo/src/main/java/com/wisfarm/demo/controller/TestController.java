@@ -2,14 +2,13 @@
  * Copyright (c) 2018.
  * 项目名称：auth-gateway-backend
  * 文件名称：TestController.java
- * Date：18-3-14 下午4:35
+ * Date：18-3-16 下午4:16
  * Author：boni
  */
 
 package com.wisfarm.demo.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.wisfarm.demo.domain;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

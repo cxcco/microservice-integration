@@ -1,8 +1,16 @@
-package com.blueskykong.auth.config.oauth;
+/*
+ * Copyright (c) 2018.
+ * 项目名称：auth-gateway-backend
+ * 文件名称：AuthenticationManagerConfig.java
+ * Date：18-3-16 下午4:05
+ * Author：boni
+ */
 
-import com.blueskykong.auth.security.authorization.provider.CustomAuthenticationProvider;
-import com.blueskykong.auth.security.authorization.service.CustomUserDetailsService;
-import com.blueskykong.auth.service.SecurityService;
+package com.wisfarm.auth.config.oauth;
+
+import com.wisfarm.auth.security.authorization.provider.CustomAuthenticationProvider;
+import com.wisfarm.auth.security.authorization.service.CustomUserDetailsService;
+import com.wisfarm.auth.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

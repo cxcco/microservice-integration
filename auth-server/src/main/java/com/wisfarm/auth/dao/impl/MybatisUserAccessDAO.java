@@ -1,8 +1,16 @@
-package com.blueskykong.auth.dao.impl;
+/*
+ * Copyright (c) 2018.
+ * 项目名称：auth-gateway-backend
+ * 文件名称：MybatisUserAccessDAO.java
+ * Date：18-3-16 下午4:05
+ * Author：boni
+ */
 
-import com.blueskykong.auth.dao.UserAccessDAO;
-import com.blueskykong.auth.dao.mapper.UserAccessMapper;
-import com.blueskykong.auth.entity.UserAccess;
+package com.wisfarm.auth.dao.impl;
+
+import com.wisfarm.auth.dao.UserAccessDAO;
+import com.wisfarm.auth.dao.mapper.UserAccessMapper;
+import com.wisfarm.auth.entity.UserAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

@@ -2,16 +2,18 @@
  * Copyright (c) 2018.
  * 项目名称：auth-gateway-backend
  * 文件名称：UserMapper.java
- * Date：18-3-13 上午10:46
+ * Date：18-3-16 下午4:05
  * Author：boni
  */
 
-package com.blueskykong.auth.dao.mapper;
+package com.wisfarm.auth.dao.mapper;
 
-import com.blueskykong.auth.dto.UserClientIdDTO;
-import com.blueskykong.auth.dto.UserRoleDTO;
-import com.blueskykong.auth.entity.User;
-import com.blueskykong.auth.entity.UserRole;
+import com.wisfarm.auth.dto.UserClientIdDTO;
+import com.wisfarm.auth.dto.UserRoleDTO;
+import com.wisfarm.auth.entity.User;
+import com.wisfarm.auth.entity.UserRole;
+import com.wisfarm.auth.dto.UserClientIdDTO;
+import com.wisfarm.auth.entity.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

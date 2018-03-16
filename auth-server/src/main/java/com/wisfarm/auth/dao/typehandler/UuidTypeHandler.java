@@ -1,4 +1,12 @@
-package com.blueskykong.auth.dao.typehandler;
+/*
+ * Copyright (c) 2018.
+ * 项目名称：auth-gateway-backend
+ * 文件名称：UuidTypeHandler.java
+ * Date：18-3-16 下午4:05
+ * Author：boni
+ */
+
+package com.wisfarm.auth.dao.typehandler;
 
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;

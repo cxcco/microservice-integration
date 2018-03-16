@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2018.
  * 项目名称：auth-gateway-backend
- * 文件名称：MyZuulFilter.java
- * Date：18-3-12 下午9:33
+ * 文件名称：HeaderEnhanceFilter.java
+ * Date：18-3-16 下午4:41
  * Author：boni
  */
 
@@ -75,6 +75,7 @@ public class HeaderEnhanceFilter extends ZuulFilter {
             log.info("Regard this request as anonymous request, so set anonymous user_id in the header.");
             ctx.addZuulRequestHeader(SecurityConstants.USER_ID_IN_HEADER, ANONYMOUS_USER_ID);
         }
+        ctx.addZuulRequestHeader("api_token","Basic ZnJvbnRlbmQ6ZnJvbnRlbmQ=");
         return null;
     }
 
