@@ -71,10 +71,25 @@
 5. [认证鉴权与API权限控制在微服务架构中的设计与实现（四）](http://blueskykong.com/2017/10/26/security4/)
 6. [微服务架构中整合网关、权限服务](http://blueskykong.com/2017/12/10/integration/)
 
-#### 订阅最新文章，欢迎关注我的公众号
 
-![微信公众号](http://ovci9bs39.bkt.clouddn.com/qrcode_for_gh_ca56415d4966_430.jpg)
 
+## 新版本修改 
+
+###### By DLB 2018-3-16
+
+### 修改记录
+
+1. 修改所有包名，统一命名到com.wisfarm包下;
+2. 所有服务中均加入了zipkin服务调用链监控；使用monitor-server作为zipkin-ui端进行监视；
+3. auth-server 做授权服务，同时兼顾了user-server的功能，为外界提供user和permission的查询；
+4. gateway对所有进入的请求做oauth2校验，并同时通过Feign调用auth-server中的user和permission接口对url进行权限校验；
+5. gateway在转发所有的请求前，会在Request的Header处增加api_token字段，这个字段作为其他被调用服务对gateway身份的验证依据；
+6. backend-demo微服务的demo项目，在每个项目中需要注意Inteceptor扩展来对gateway身份进行校验；
+
+### 改进计划
+
+1. user-server功能从auth-server中独立成一个微服务；
+2. 在微服务项目中对gateway的校验方式使用jwt；
 
 
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.blueskykong.auth.dao.mapper.RoleMapper">
-    <resultMap id="BaseResultMap" type="com.blueskykong.auth.entity.Role">
+<mapper namespace="com.wisfarm.auth.dao.mapper.RoleMapper">
+    <resultMap id="BaseResultMap" type="com.wisfarm.auth.entity.Role">
         <id column="id" typeHandler="UUIDTypeHandler" property="id" />
         <result column="name" jdbcType="VARCHAR" property="name" />
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
@@ -28,7 +28,7 @@
         where id = #{id,javaType=UUID,jdbcType=OTHER,typeHandler=UUIDTypeHandler}
     </delete>
 
-    <insert id="insert" parameterType="com.blueskykong.auth.entity.Role">
+    <insert id="insert" parameterType="com.wisfarm.auth.entity.Role">
         insert into role
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -60,7 +60,7 @@
         </trim>
     </insert>
 
-    <update id="updateByPrimaryKey" parameterType="com.blueskykong.auth.entity.Role">
+    <update id="updateByPrimaryKey" parameterType="com.wisfarm.auth.entity.Role">
         update role
         <set>
             <if test="name != null">

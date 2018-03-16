@@ -5,10 +5,10 @@
 <configuration>
     <typeAliases>
         <typeAlias alias="UUID" type="java.util.UUID"/>
-        <typeAlias alias="UUIDTypeHandler" type="com.blueskykong.auth.dao.typehandler.UuidTypeHandler"/>
+        <typeAlias alias="UUIDTypeHandler" type="com.wisfarm.auth.dao.typehandler.UuidTypeHandler"/>
     </typeAliases>
 
     <typeHandlers>
-        <typeHandler handler="com.blueskykong.auth.dao.typehandler.UuidTypeHandler"/>
+        <typeHandler handler="com.wisfarm.auth.dao.typehandler.UuidTypeHandler"/>
     </typeHandlers>
 </configuration>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.blueskykong.auth.dao.mapper.UserRoleMapper">
-  <resultMap id="BaseResultMap" type="com.blueskykong.auth.entity.UserRole">
+<mapper namespace="com.wisfarm.auth.dao.mapper.UserRoleMapper">
+  <resultMap id="BaseResultMap" type="com.wisfarm.auth.entity.UserRole">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="user_id" typeHandler="UUIDTypeHandler" property="userId" />
     <result column="role_id" typeHandler="UUIDTypeHandler" property="roleId" />
@@ -38,7 +38,7 @@
     where user_id = #{userId,javaType=UUID,jdbcType=OTHER,typeHandler=UUIDTypeHandler}
   </delete>
 
-  <insert id="insert" parameterType="com.blueskykong.auth.entity.UserRole">
+  <insert id="insert" parameterType="com.wisfarm.auth.entity.UserRole">
     insert into user_role
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userId != null">
@@ -63,7 +63,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.blueskykong.auth.entity.UserRole">
+  <update id="updateByPrimaryKey" parameterType="com.wisfarm.auth.entity.UserRole">
     update user_role
     <set>
       <if test="userId != null">
@@ -80,7 +80,7 @@
   </update>
 
 
-  <resultMap id="UserRoleDTO" type="com.blueskykong.auth.dto.UserRoleDTO">
+  <resultMap id="UserRoleDTO" type="com.wisfarm.auth.dto.UserRoleDTO">
     <result column="user_id" typeHandler="UUIDTypeHandler" property="userId" />
     <result column="role_id" typeHandler="UUIDTypeHandler" property="roleId" />
     <result column="name" jdbcType="VARCHAR" property="name" />

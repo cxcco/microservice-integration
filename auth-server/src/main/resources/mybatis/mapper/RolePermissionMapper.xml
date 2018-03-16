@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.blueskykong.auth.dao.mapper.RolePermissionMapper">
-    <resultMap id="BaseResultMap" type="com.blueskykong.auth.entity.RolePermission">
+<mapper namespace="com.wisfarm.auth.dao.mapper.RolePermissionMapper">
+    <resultMap id="BaseResultMap" type="com.wisfarm.auth.entity.RolePermission">
         <id column="id" jdbcType="BIGINT" property="id" />
         <!--<result column="role_id" typeHandler="UUIDTypeHandler" property="id" />  出现错误-->
         <result column="role_id" typeHandler="UUIDTypeHandler" property="roleId" />
@@ -31,7 +31,7 @@
     </delete>
 
     
-    <insert id="insert" parameterType="com.blueskykong.auth.entity.RolePermission">
+    <insert id="insert" parameterType="com.wisfarm.auth.entity.RolePermission">
         insert into role_permission
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -56,7 +56,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKey" parameterType="com.blueskykong.auth.entity.RolePermission">
+    <update id="updateByPrimaryKey" parameterType="com.wisfarm.auth.entity.RolePermission">
         update role_permission
         <set>
             <if test="roleId != null">

@@ -1,10 +1,9 @@
 auth:
   permitall:
     -
-      pattern: /login/**
+      pattern: /auth/oauth/**
     -
       pattern: /web/**
-
 
 zuul:
   ribbon:
@@ -20,10 +19,10 @@ zuul:
       serviceId: demo
       sensitiveHeaders: Cookie,Set-Cookie
     auth:
-      path: /login/**
+      path: /auth/**
       ignoredPatterns: /consul
       serviceId: auth
-      sensitiveHeaders: Cookie,Set-Cookie
+      sensitiveHeaders: Cookie,Set-Cookie,Authentication
 
 ribbon:
   ReadTimeout: 10000
@@ -33,6 +32,7 @@ hystrix:
     default:
       execution:
         isolation:
+          #strategy: SEMAPHORE
           strategy: THREAD
           thread:
             timeoutInMilliseconds: 10000
@@ -45,6 +45,20 @@ security:
       clientId: frontend
       clientSecret: frontend
     resource:
-      userInfoUri: /auth/user
+      id: res_apptem
+     # userInfoUri: /auth/user
       token-info-uri: /oauth/check_token
   filter-order: 1
+
+feign.hystrix.enabled: false
+
+paascloud:
+  oauth2:
+    client:
+      id: ${security.oauth2.resource.id}
+      accessTokenUri: ${security.oauth2.client.accessTokenUri}
+      clientId: gateway
+      clientSecret: gateway
+      clientAuthenticationScheme: header
+      clientUserName: gatewayuser
+      clientPassword: password
